@@ -63,12 +63,63 @@ bool searchNode(node* head, int key)
     return false;
 }
 
+void deleteAtHead(node* &head)
+{
+    node* temp = head;
+    if(head->next!= NULL)
+    {
+        head=head->next;
+    }
+    else 
+    {
+        head = NULL;
+    }
+    delete temp;
+}
+void deleteNode(node* &head, int key)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    if(head->data == key)
+        {
+            deleteAtHead(head);
+            return;
+        }
+    node* temp = head;
+    while(temp->next != NULL)
+    {
+        if(key==temp->next->data)
+        {
+            if(temp->next->next == NULL)
+            {
+                temp->next = NULL;
+            }
+            else
+            {           
+                temp->next = temp->next->next;
+            }
+            node* toDelete = temp->next;
+            delete toDelete;
+            return;
+        }
+        temp = temp->next;
+    }
+}
 int main()
 {
     node *head = NULL;
-    // insertAtHead(head, 7);
-    insertAtTail(head, 86);
+    insertAtHead(head, 9);
+    // insertAtHead(head, 9);
+    deleteNode(head,9);
+    insertAtHead(head,63);
+    insertAtTail(head,453);
+    deleteAtHead(head);
+    // insertAtTail(head, 86);
     // insertAtHead(head,5);
     displayNode(head);
+    // deleteNode(head,7);
+    // displayNode(head);
     return 0;
 }
