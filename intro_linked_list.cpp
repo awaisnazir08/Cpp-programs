@@ -117,9 +117,10 @@ int main()
     insertAtTail(head,453);
     deleteAtHead(head);
     // insertAtTail(head, 86);
-    // insertAtHead(head,5);
+    insertAtHead(head,5);
     displayNode(head);
-    // deleteNode(head,7);
-    // displayNode(head);
+    deleteNode(head,453);
+    deleteNode(head, 334);
+    displayNode(head);
     return 0;
 }
