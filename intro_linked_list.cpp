@@ -107,20 +107,41 @@ void deleteNode(node* &head, int key)
         temp = temp->next;
     }
 }
+
+void reverseList(node* &head)
+{
+    if(head == NULL || head->next == NULL)
+    {
+        return;
+    }
+    node* previous = NULL;
+    node* current = head; 
+    node* temp = NULL;
+    while(current != NULL)
+    {
+        temp = current ->next;
+        current->next = previous;
+        previous = current;
+        current = temp;       
+    }
+    head = previous;     
+}
+
 int main()
 {
     node *head = NULL;
     insertAtHead(head, 9);
     // insertAtHead(head, 9);
-    deleteNode(head,9);
+    // deleteNode(head,9);
     insertAtHead(head,63);
     insertAtTail(head,453);
-    deleteAtHead(head);
+    // deleteAtHead(head);
     // insertAtTail(head, 86);
     insertAtHead(head,5);
     displayNode(head);
-    deleteNode(head,453);
-    deleteNode(head, 334);
+    reverseList(head);
+    // deleteNode(head,453);
+    // deleteNode(head, 334);
     displayNode(head);
     return 0;
 }
