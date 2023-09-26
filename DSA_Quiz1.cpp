@@ -3,16 +3,16 @@ using namespace std;
 class node
 {
 public:
-    int data;
+    string data;
     node *next; // pointer that points to the next node
-    node(int value)
+    node(string value)
     {
         this->data = value;
         this->next = NULL;
     }
 };
 // &head is the reference to the pointer head, indicating that it is reference to a pointer
-void insertAtTail(node *&head, int val) // node* is a pointer referencing to an abject of type node which is usually a class or a struct
+void insertAtTail(node *&head, string val) // node* is a pointer referencing to an abject of type node which is usually a class or a struct
 {
     node *n = new node(val);
     if (head == NULL)
@@ -28,7 +28,7 @@ void insertAtTail(node *&head, int val) // node* is a pointer referencing to an 
     temp->next = n;
 }
 
-void insertAtHead(node* &head, int val)
+void insertAtHead(node* &head, string val)
 {
     node *n = new node(val);
     n->next = head;
@@ -46,7 +46,7 @@ void displayNode(node *head)
     cout << "NULL" << endl;
 }
 
-bool searchNode(node* head, int key)
+bool searchNode(node* head, string key)
 {
     node *temp = head;
     while(temp!=NULL)
@@ -76,7 +76,7 @@ void deleteAtHead(node* &head)
     }
     delete temp;
 }
-void deleteNode(node* &head, int key)
+void deleteNode(node* &head, string key)
 {
     if(head == NULL)
     {
@@ -127,7 +127,7 @@ void reverseList(node* &head)
     head = previous;     
 }
 
-void insertAtPosition(node* &head, int val, int pos)
+void insertAtPosition(node* &head, string val, int pos)
 {
     if (pos!=1 && head==NULL)
     {
@@ -177,91 +177,61 @@ void deleteAtPosition(node* &head, int pos)
     }
 }
 
-void makeCycle(node* myList, int pos)
+
+void insertAlphabetically(node* &myList, string val)
 {
-    node* temp = myList;
-    node* cycleStart;
-    int counter =1;
-    while(temp->next != nullptr)
+    node *n = new node(val);
+    
+    if (myList == nullptr || val < myList->data)
     {
-        if(counter==pos)
-        {
-            cycleStart = temp;
-        }
-        counter++;
+        insertAtHead(myList, val);
+        delete n;
+        return;
+    }
+
+    node* temp = myList;
+
+    while (temp->next != NULL && val > temp->next->data)
+    {
         temp = temp->next;
     }
-    temp->next = cycleStart;
+
+    n->next = temp->next;
+    temp->next = n;
 }
 
-bool detectCycle(node* &myList)
-{
-    if(myList == nullptr)
-    {
-        return;
-    }
-    node* slow;
-    node* fast;
-    while(fast->next != nullptr && fast!= nullptr)
-    {
-        fast = fast->next->next;
-        slow = slow -> next;
-        if(fast == slow)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-void removeCycle(node* &myList)
-{
-    if(myList == nullptr)
-    {
-        return;
-    }
-    node* slow;
-    node* fast;
-    while(fast->next != nullptr && fast!= nullptr)
-    {
-        fast = fast->next->next;
-        slow = slow -> next;
-        if(fast == slow)
-        {
-            break;
-        }
-    }
-    slow = myList;
-    while(fast->next != slow->next)
-    {
-        fast = fast->next;
-        slow = slow ->next;
-    }
-    fast->next = nullptr;
-    return;
-
-}
 
 int main()
 {
     node *head = NULL;
-    insertAtHead(head, 9);
-    // insertAtHead(head, 9);
-    // deleteNode(head,9);
-    insertAtHead(head,63);
-    insertAtTail(head,453);
-    // deleteAtHead(head);
-    // insertAtTail(head, 86);
-    insertAtHead(head,5);
-    displayNode(head);
-    // reverseList(head);
-    // reverseList(head);
-    // insertAtPosition(head, 100, 3);
-    // insertAtPosition(head, 689, 20);
-    // deleteNode(head,63);
-    // deleteAtPosition(head,3);
-    deleteNode(head,453);
-    // deleteNode(head, 334);
-    displayNode(head);
+    string names[7] = {"Ahmed","Ayesha","Bilal","Fatima","Hira","Nabeel","Usman"};
+    for(int i = 0; i<(sizeof(names)/sizeof(names[0]))-1; i++)
+    {
+        for (int j = 0; j < sizeof(names)/sizeof(names[0])-i-1;j++)
+        {
+        if(names[j]>names[j+1])
+        {
+            string temp = names[j];
+            names[j]= names[j+1];
+            names[j+1] = temp;
+        }
+        }
+
+    }
+    // for(int i = 0; i<sizeof(names)/sizeof(names[0]); i++)
+    // {
+    //     cout<<names[i]<<endl;
+    // }
+    // displayNode(head);
+    node* myList = NULL;
+    for(int i = 0; i < sizeof(names)/sizeof(names[0]); i++)
+    {
+        insertAtTail(myList, names[i]);
+    }
+    insertAlphabetically(myList, "Awais");
+    insertAlphabetically(myList, "Zaheer");
+    insertAlphabetically(myList, "Aamaan");
+    deleteAtPosition(myList,2);
+    displayNode(myList);
     return 0;
 }
