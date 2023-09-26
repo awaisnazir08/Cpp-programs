@@ -97,11 +97,11 @@ void deleteNode(node* &head, int key)
                 temp->next = NULL;
             }
             else
-            {           
+            {       
+                node* toDelete = temp->next;    
                 temp->next = temp->next->next;
+                delete toDelete;
             }
-            node* toDelete = temp->next;
-            delete toDelete;
             return;
         }
         temp = temp->next;
@@ -127,6 +127,56 @@ void reverseList(node* &head)
     head = previous;     
 }
 
+void insertAtPosition(node* &head, int val, int pos)
+{
+    if (pos!=1 && head==NULL)
+    {
+        return;
+    }
+
+    if(pos==1)
+    {
+        insertAtHead(head,val);
+        return;
+    }
+    else
+    {
+        node *n = new node(val);
+        node *temp = head;
+        for(int i = 1; i < pos - 1; i++)
+        {
+            temp = temp->next;
+        }
+        n->next = temp->next;
+        temp->next = n;
+    }
+}
+void deleteAtPosition(node* &head, int pos)
+{
+    if (head == NULL)
+    {
+        return;
+    }
+    else
+    {
+        node* temp = head;
+        for(int i=1;i<pos-1; i++)
+        {
+            temp = temp -> next;
+        }
+        node *toDelete = temp->next;
+        if(temp->next->next == NULL)
+        {
+            temp->next = NULL;
+        }
+        else
+        {
+            temp -> next = temp ->next->next;
+        }
+        delete toDelete;
+    }
+}
+
 int main()
 {
     node *head = NULL;
@@ -139,8 +189,13 @@ int main()
     // insertAtTail(head, 86);
     insertAtHead(head,5);
     displayNode(head);
-    reverseList(head);
-    // deleteNode(head,453);
+    // reverseList(head);
+    // reverseList(head);
+    // insertAtPosition(head, 100, 3);
+    // insertAtPosition(head, 689, 20);
+    // deleteNode(head,63);
+    // deleteAtPosition(head,3);
+    deleteNode(head,453);
     // deleteNode(head, 334);
     displayNode(head);
     return 0;
