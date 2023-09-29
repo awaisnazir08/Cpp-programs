@@ -45,6 +45,10 @@ public:
     {
         return (counter==-1);
     }
+    int size()
+    {
+        return counter+1;
+    }
 };
 
 
@@ -59,5 +63,9 @@ int main()
     s.pop();
     s.pop();
     cout<<s.empty()<<endl;
+    s.push(5);
+    s.push(574);
+    cout<<s.size()<<endl;
+
     return 0;
 }
