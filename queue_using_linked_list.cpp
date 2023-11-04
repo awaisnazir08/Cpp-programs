@@ -41,14 +41,19 @@ class queue
         }
         node *temp = front;
         front = front->next;
-        delete front;
+        delete temp;
+        if(front == NULL)
+        {
+            back = NULL;
+        }
     }
 
     int peek()
     {
         if(front == NULL)
         {
-            return;
+            cout<<"The queue is empty!"<<endl;
+            return -1;
         }
         return front->data;
     }
@@ -60,9 +65,17 @@ class queue
         }
         return false;
     }
+    bool isFull()
+    {
+        return false;
+    }
 };
 int main()
 {
-
+    queue q1;
+    q1.enqueue(5);
+    cout<<q1.empty();
+    q1.dequeue();
+    cout<<q1.empty();
     return 0;
 }
