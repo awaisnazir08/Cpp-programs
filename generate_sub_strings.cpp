@@ -13,6 +13,6 @@ void substrings(string s, string ans = "")
 }
 int main()
 {
-    substrings("ABCD");
+    substrings("AB");
     return 0;
 }
