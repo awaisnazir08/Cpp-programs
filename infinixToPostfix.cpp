@@ -46,7 +46,7 @@ vector<string> infinixToPostfix(vector<string> str)
             }
             // if (!s.empty())
             // {
-                s.pop();
+            s.pop();
             // }
         }
         else
@@ -70,17 +70,19 @@ int main()
 {
     vector<string> my_string;
     vector<string> result;
-    my_string.push_back("89");
+    my_string.push_back("1");
+    my_string.push_back("*");
+    my_string.push_back("23");
     my_string.push_back("+");
+    my_string.push_back("(");
+    my_string.push_back("7");
+    // my_string.push_back("4");
+    my_string.push_back("-");
     my_string.push_back("6");
     my_string.push_back("*");
-    my_string.push_back("(");
-    my_string.push_back("4");
-    my_string.push_back("-");
-    my_string.push_back("5");
-    my_string.push_back(")");
-    my_string.push_back("/");
+    // my_string.push_back("/");
     my_string.push_back("8");
+    my_string.push_back(")");
 
     result = infinixToPostfix(my_string);
     for (int i = 0; i < result.size(); i++)

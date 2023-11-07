@@ -23,7 +23,8 @@ int medianOfThree(std::vector<int>& arr, int low, int high) {
 
 // Partition the array and return the pivot's index
 int partition(std::vector<int>& arr, int low, int high) {
-    int pivot = medianOfThree(arr, low, high);
+    // int pivot = medianOfThree(arr, low, high);
+    int pivot = arr[high];
     int i = low - 1;
     
     for (int j = low; j <= high - 1; j++) {

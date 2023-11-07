@@ -1,4 +1,3 @@
-else if (s.empty())
-        {
-            s.push(str[i]);
-        }
+> arr[high]) {
+    //     std::swap(arr[mid], arr[high]);
+    // }

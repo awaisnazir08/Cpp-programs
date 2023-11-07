@@ -9,7 +9,7 @@ class Stack
 public:
     void push(int v)
     {
-        q.push(v);
+        q.push(v); 
     }
     void pop()
     {

@@ -16,7 +16,7 @@ public:
         }
         for (int i = 0; i < n2; i++)
         {
-            a2[i] = a[middle + i + 1];  //why plus 1
+            a2[i] = a[middle + i+1];  //why plus 1
         }
         int i = 0, j = 0, k = left;
         while (i < n1 && j < n2)
@@ -57,14 +57,30 @@ public:
         }
     }
 
-    vector<int> sortArray(vector<int> &nums)
-    {
-        mergeSort(nums, 0, nums.size() - 1);
-        return nums;
-    }
+    // vector<int> sortArray(vector<int> &nums)
+    // {
+    //     mergeSort(nums, 0, nums.size() - 1);
+    //     return nums;
+    // }
 };
 int main()
 {
-    
+    Solution s;
+    vector<int> arr = {12, 11, 13, 5, 6, 7};
+    int arr_size = arr.size();
+
+    std::cout << "Original array: ";
+    for (int i = 0; i < arr_size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    s.mergeSort(arr, 0,arr_size - 1);
+
+    std::cout << "Sorted array: ";
+    for (int i = 0; i < arr_size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
     return 0;
 }

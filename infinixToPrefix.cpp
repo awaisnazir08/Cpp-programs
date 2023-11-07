@@ -33,13 +33,13 @@ vector<string> infinixToPostfix(vector<string> str)
         {
             result.push_back(str[i]);
         }
-        else if (str[i] == "(")
+        else if (str[i] == ")")
         {
             s.push(str[i]);
         }
-        else if (str[i] == ")")
+        else if (str[i] == "(")
         {
-            while ((!s.empty()) && s.top() != "(")
+            while ((!s.empty()) && s.top() != ")")
             {
                 result.push_back(s.top());
                 s.pop();

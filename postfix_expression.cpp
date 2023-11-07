@@ -69,14 +69,14 @@ int postPrefixEvaluation(vector<string> s)
 int main()
 {
     vector<string> s;
-    s.push_back("4");
-    s.push_back("6");
-    s.push_back("+");
-    s.push_back("2");
-    s.push_back("/");
-    s.push_back("5");
+    s.push_back("1");
+    s.push_back("23");
     s.push_back("*");
     s.push_back("7");
+    s.push_back("6");
+    s.push_back("8");
+    s.push_back("*");
+    s.push_back("-");
     s.push_back("+");
     cout << postPrefixEvaluation(s);
     return 0;
