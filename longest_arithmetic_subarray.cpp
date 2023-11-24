@@ -26,7 +26,7 @@ int main()
             temp = curr;
             diff = arr[i+1]-arr[i];
             curr = 2;
-            max(temp, curr);
+            m = max(temp, curr);
         }
     }
     cout<<m<<endl;

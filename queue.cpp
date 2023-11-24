@@ -1,5 +1,6 @@
 #include<iostream>
 #include<list>
+// #include<queue>
 #define n 100
 using namespace std;
 class queue{
@@ -11,6 +12,10 @@ class queue{
         arr = new int(n);
         this->back = -1;
         this->front = -1; 
+    }
+    ~queue()
+    {
+        delete [] arr;
     }
     void enqueue(int v)
     {
@@ -57,7 +62,9 @@ class queue{
 };
 int main()
 {
-    list<int> a;
+    // queue<int> q;
+    
+    // list<int> a;
 
     return 0;
 }

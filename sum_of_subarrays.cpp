@@ -8,8 +8,8 @@ int main(){
         int temp=0;
         for(int j=i;j<4;j++)
         {
-            s+=arr[j];
-            temp=j-1;
+            // s+=arr[j];
+            temp=j;
             while(temp>=i)
             {
                 s+=arr[temp];
