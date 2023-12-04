@@ -4,7 +4,7 @@ using namespace std;
 // Structure to represent a node in a Binary Search Tree (BST)
 struct BinarySearchTrees {
     int data;
-    BinarySearchTrees* left, * right;
+    BinarySearchTrees* left, * right, *parent;
 
     // Constructor to initialize a node with a given value
     BinarySearchTrees(int val)
@@ -33,6 +33,62 @@ BinarySearchTrees* insertInBinarySearchTree(BinarySearchTrees* root, int val)
     return root;
 }
 
+int ceil(BinarySearchTrees* root, int v)
+{
+    if(root == nullptr)
+    {
+        return -1;
+    }
+    int value = -1;
+    while(root != nullptr)
+    {
+        if(root->data == v)
+        {
+            return v;
+        }
+        else if(root->data < v)
+        {
+            root = root->right;
+        }
+        else{
+            value = root->data;
+            root = root->left;
+        }
+        return value;
+    }
+}
+
+int countNodes(BinarySearchTrees* root)
+{
+    int count = 0;
+    if(root)
+    {
+        count++;
+        count += countNodes(root->left);
+        count+= countNodes(root->right);
+    }
+    return count;
+}
+
+int findRank(BinarySearchTrees* root, int v)
+{
+    if(!root)
+    {
+        return 0;
+    }
+    int count = 0;
+    if(root->data >= v)
+    {
+        count += findRank(root->left, v);
+    }
+    else
+    {
+        count++;
+        count+= findRank(root->left,v);
+        count += findRank(root->right, v);
+    }
+    return count;
+}
 // In-order traversal of a Binary Search Tree, printing values in sorted order
 void inOrderTraversal(BinarySearchTrees* root)
 {
@@ -89,6 +145,97 @@ BinarySearchTrees* searchInBinarySearchTree(BinarySearchTrees* root, int key)
         return searchInBinarySearchTree(root->left, key);
     }
 }
+int getMin(BinarySearchTrees* n)
+{
+    if(n == nullptr)
+    {
+        return -1;
+    }
+    if(n->left == nullptr)
+    {
+        return n->data;
+    }
+    return getMin(n->left);
+
+}
+int getMax(BinarySearchTrees* n)
+{
+    if(n == nullptr)
+    {
+        return -1;
+    }
+    if(n->right == nullptr)
+    {
+        return n->data;
+    }
+    return getMax(n->right);
+
+}
+//parent is needed
+int Successor(BinarySearchTrees* node)
+{
+    if(node->right !=nullptr)
+    {
+        return getMin(node->right);
+    }
+    BinarySearchTrees* y = node->parent;
+    while(y!= nullptr && node == y->right)
+    {
+        node = y;
+        y = y->parent; 
+    }
+    return y->data;
+}
+//parent needed
+int Predecessor(BinarySearchTrees* node)
+{
+    if(node->left != nullptr)
+    {
+        return getMax(node->left);
+    }
+    BinarySearchTrees* y = node->parent;
+    while(y!=nullptr && node == y->left)
+    {
+        node = y;
+        y = y ->parent;
+    }
+    return y->data;
+}
+
+int successor(BinarySearchTrees* root, BinarySearchTrees* node)
+{
+    BinarySearchTrees* successor = nullptr;
+    while(root != nullptr)
+    {
+        if(root->data <= node->data)
+        {
+            node = node->right;
+        }
+        else{
+            successor = root;
+            root = root ->left;
+        }
+        return successor->data;
+    }
+}
+
+int predecessor(BinarySearchTrees* root, BinarySearchTrees* node)
+{
+    BinarySearchTrees* successor = nullptr;
+    while(root != nullptr)
+    {
+        if(root->data >= node->data)
+        {
+            node = node->left;
+        }
+        else{
+            successor = root;
+            root = root -> right;
+        }
+        return successor->data;
+    }
+}
+
 
 // Function to find the in-order successor of a node in a Binary Search Tree
 //it will find the next inorder successor of the node that has to be deleted
@@ -149,6 +296,8 @@ int main() {
     for (int i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
         root = insertInBinarySearchTree(root, values[i]);
     }
+
+    cout<<findRank(root, 1)<<endl;
 
     // Displaying the tree after insertions
     cout << "Binary Search Tree after insertions: ";
