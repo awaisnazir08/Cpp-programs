@@ -1,125 +1,77 @@
 #include <iostream>
-#include <algorithm>
-#include <vector>
-using namespace std;
+#include <queue>
+#include <map>
 
-int find_max(string arr[], int size)
-{
-    int max_len = arr[0].length();
-    for (int i = 0; i < size; i++)
-    {
-        if (arr[i].length() > max_len)
-        {
-            max_len = arr[i].length();
+// Struct to represent a student
+struct Student {
+    std::string name;
+    int marks;
+
+    // Constructor
+    Student(const std::string& n, int m) : name(n), marks(m) {}
+
+    // Comparison operator for priority queue
+    bool operator<(const Student& other) const {
+        // Assuming higher marks have higher priority
+        return marks < other.marks;
+    }
+};
+
+int main() {
+    // Creating 5 priority queues for different courses
+    std::priority_queue<Student> course1;
+    std::priority_queue<Student> course2;
+    std::priority_queue<Student> course3;
+    std::priority_queue<Student> course4;
+    std::priority_queue<Student> course5;
+
+    // Map to store the queues with course names as keys
+    std::map<std::string, std::priority_queue<Student>> courseMap;
+
+    // Adding some sample data
+    course1.push(Student("Alice", 90));
+    course1.push(Student("Bob", 85));
+
+    course2.push(Student("Charlie", 95));
+    course2.push(Student("David", 88));
+
+    course3.push(Student("Eve", 92));
+    course3.push(Student("Frank", 89));
+
+    course4.push(Student("Grace", 87));
+    course4.push(Student("Hank", 91));
+
+    course5.push(Student("Ivy", 93));
+    course5.push(Student("Jack", 86));
+
+    // Adding queues to the map with course names as keys
+    courseMap["Course1"] = course1;
+    courseMap["Course2"] = course2;
+    courseMap["Course3"] = course3;
+    courseMap["Course4"] = course4;
+    courseMap["Course5"] = course5;
+
+    // Example: Accessing the priority queue for a specific course
+    std::string targetCourse = "Course3";
+
+    // Check if the course exists in the map
+    if (courseMap.find(targetCourse) != courseMap.end()) {
+        std::cout << "Students in " << targetCourse << " with their marks:\n";
+        // Accessing the priority queue for the target course
+        std::priority_queue<Student> targetQueue = courseMap[targetCourse];
+
+        // Pop elements from the queue until it's empty
+        while (!targetQueue.empty()) {
+            Student student = targetQueue.top();
+            std::cout << student.name << ": " << student.marks << "\n";
+            targetQueue.pop();
         }
-    }
-    return max_len;
-}
-
-// void countingSort(string arr[], int size, int pos)
-// {
-//     const int RANGE = 26;
-//     vector<int> count(RANGE + 1, 0);
-//     string *result = new string[size];
-
-//     for (int i = 0; i < size; i++)
-//     {
-//         if(arr[i].length()<= pos + 1)
-//         {
-//             count[RANGE]++;
-//         }
-//         else{
-//             count[arr[i][pos]-97]++;
-//         }
-//     }
-
-//     for (int i = 1; i <= RANGE; i++)
-//     {
-//         count[i] += count[i - 1];
-//     }
-
-//     for (int i = size - 1; i >= 0; i--)
-//     {
-//         if(arr[i].length()<=pos + 1)
-//         {
-//             result[--count[RANGE]] = arr[i];
-//         }
-//         else{
-//         result[--count[arr[i][pos]-97]] =  arr[i];
-//         }
-//     }
-
-//     copy(result, result + size, arr);
-//     delete[] result;
-// }
-
-void countingSort(string arr[], int size, int pos)
-{
-    const int RANGE = 26;
-    vector<int> count(RANGE + 1, 0);
-    string *result = new string[size];
-
-    for (int i = 0; i < size; i++)
-    {
-        if (arr[i].length() <= pos)
-        {
-            count[0]++;
-        }
-        else
-        {
-            count[arr[i][pos] - 'a']++;
-        }
+    } else {
+        std::cout << "Course not found.\n";
     }
 
-    for (int i = 1; i <= RANGE; i++)
-    {
-        count[i] += count[i - 1];
-    }
-
-    for (int i = size - 1; i >= 0; i--)
-    {
-        if (arr[i].length() <= pos)
-        {
-            result[--count[0]] = arr[i];
-        }
-        else
-        {
-            result[--count[arr[i][pos] - 'a']] = arr[i];
-        }
-    }
-
-    copy(result, result + size, arr);
-    delete[] result;
-}
-
-void radixSort(string arr[], int size)
-{
-    int max_len = find_max(arr, size);
-    for (int pos = 0; pos < max_len; pos++)
-    {
-        countingSort(arr, size, pos);
-    }
-}
-
-int main()
-{
-    string arr[] = {"aadsy","bali","aas"};
-    int size = sizeof(arr) / sizeof(arr[0]);
-
-    cout << "Original array: ";
-    for (int i = 0; i < size; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
-    radixSort(arr, size);
-
-    cout << "Sorted array: ";
-    for (int i = 0; i < size; i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;      
     return 0;
 }
+
+
+
