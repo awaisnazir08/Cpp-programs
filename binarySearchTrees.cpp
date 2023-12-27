@@ -77,7 +77,7 @@ int findRank(BinarySearchTrees* root, int v)
         return 0;
     }
     int count = 0;
-    if(root->data >= v)
+    if(v <= root->data)
     {
         count += findRank(root->left, v);
     }
@@ -186,6 +186,7 @@ int Successor(BinarySearchTrees* node)
     }
     return y->data;
 }
+
 //parent needed
 int Predecessor(BinarySearchTrees* node)
 {
@@ -197,10 +198,11 @@ int Predecessor(BinarySearchTrees* node)
     while(y!=nullptr && node == y->left)
     {
         node = y;
-        y = y ->parent;
+        y = y -> parent;
     }
     return y->data;
 }
+
 
 int successor(BinarySearchTrees* root, BinarySearchTrees* node)
 {
@@ -236,10 +238,9 @@ int predecessor(BinarySearchTrees* root, BinarySearchTrees* node)
     }
 }
 
-
 // Function to find the in-order successor of a node in a Binary Search Tree
 //it will find the next inorder successor of the node that has to be deleted
-BinarySearchTrees* inorderSuccessor(BinarySearchTrees* root)
+BinarySearchTrees* inOrderSuccessor(BinarySearchTrees* root)
 {
     BinarySearchTrees* curr = root;
     while (curr != nullptr && curr->left != nullptr)
@@ -277,7 +278,7 @@ BinarySearchTrees* deleteInBinarySearchTree(BinarySearchTrees* root, int key)
 
         // Case 3: Node with two children
         // the logic is that we will find the next bigger element, and replace it with the node that has to be deleted
-        BinarySearchTrees* temp = inorderSuccessor(root->right);
+        BinarySearchTrees* temp = inOrderSuccessor(root->right);
         root->data = temp->data;
         root->right = deleteInBinarySearchTree(root->right, temp->data);
     }

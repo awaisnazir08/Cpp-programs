@@ -38,6 +38,7 @@ class BinaryMinHeap
     void buildHeap()
     {
         int p = heap.size() - 1;
+        // int t = size(); 
         //while the parent is greater than its child, swap the elements
         while (p >= 1 && heap[parent(p)] > heap[p])
         {
@@ -115,7 +116,7 @@ public:
             }
 
             //assigning the minimum index to the child with the lower value
-            if (left < size() && heap[right] < heap[minIndex])
+            if (right < size() && heap[right] < heap[minIndex])
             {
                 minIndex = right;
             }
