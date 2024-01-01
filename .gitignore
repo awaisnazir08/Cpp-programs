@@ -67,3 +67,5 @@ breadth first search graphs.exe
 breadth_first_search_graphs.exe
 graphUsingAdjacencyList.exe
 inDegreeoutDegree.exe
+cycleDetectionDirectedGraph.exe
+topologicalSort.exe

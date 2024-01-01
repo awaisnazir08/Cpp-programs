@@ -1,6 +1,8 @@
 #include<iostream>
 #include<vector>
+#include<queue>
 using namespace std;
+//topological sort exists only on directed acyclic graphs (DAG)
 class Graph
 {
     int num_of_vertices;
@@ -66,9 +68,59 @@ class Graph
             cout<<endl;
         }
     }
+
+    vector<int> TopologicalSort()
+    {
+        queue<int> q;
+        vector<int> inDeg = inDegrees;
+        vector<int> result;
+        for(int i = 0; i < num_of_vertices; i++)
+        {
+            if(inDeg[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+
+        while(!q.empty())
+        {
+            int out = q.front();
+            result.push_back(out);
+            q.pop();
+            for(int i = 0; i < num_of_vertices; i++)
+            {
+                if(adjacencyMatrix[out][i])
+                {
+                    inDeg[i]--;
+                    if(inDeg[i] == 0)
+                    {
+                        q.push(i);
+                    }
+                }
+            }
+        }
+        return result;
+
+    }
 };
 int main()
 {
-
+    Graph g(7);
+    g.addDirectedEdge(1, 2);
+    g.addDirectedEdge(1, 4);
+    g.addDirectedEdge(2, 3);
+    g.addDirectedEdge(2, 4);
+    g.addDirectedEdge(2, 5);
+    g.addDirectedEdge(3, 4);
+    g.addDirectedEdge(5, 3);
+    g.addDirectedEdge(6, 3);
+    g.addDirectedEdge(6, 5);
+    g.calculateDegrees();
+    cout << "Topological Sort:" << endl;
+    vector<int> result = g.TopologicalSort();
+    for (int vertex : result) {
+        cout << vertex << " ";
+    }
+    cout << endl;
     return 0;
 }
