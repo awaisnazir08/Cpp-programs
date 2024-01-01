@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-
+//time complexity = O(N) + O(2E) where 2E is the number of neigbors for each node(twice the edges)?
 //class that creates a graph as well as also implements the breadth first search on the graph
 class Graph
 {
@@ -32,6 +32,10 @@ public:
         }
     }
     //function to add an undirected edge between two nodes
+    /* for weighted graph, we will also be provided the weight, so instead of storing true
+    we will store the weight in the below function
+    this can be done for both directed and undirected graphs..!!
+    */
     void addEdge(int n1, int n2)
     {
         adjacencyMatrix[n1][n2] = true;
@@ -39,6 +43,12 @@ public:
     }
     
     // Breadth-First Search traversal starting from a given node
+    /**
+     * The function performs a breadth-first search traversal on a graph starting from a given node.
+     * 
+     * @param node The parameter "node" represents the starting node from which the breadth-first
+     * search will begin.
+     */
     void breadth_first_search(int node)
     {
         // Queue to store nodes to be processed in BFS
@@ -72,6 +82,28 @@ public:
             }
         }
     }
+    // dfs traversal time complexity
+    // time complexitY for undirected graph: O(N) + O(2E)  (summation of degrees)
+    // time complexity for directed graph: O(N) + O(E)
+    void dfshelper(int node, vector<bool>&visited)
+    {
+        visited[node] = true;
+        cout<<node<<" ";
+        for(int i = 0; i < num_of_vertices; i++)
+        {
+            if(adjacencyMatrix[node][i] && !visited[i])
+            {
+                dfshelper(i, visited);
+            }
+        }
+    }
+
+    void depthFirstTraversal(int node)
+    {
+        vector<bool>visited(num_of_vertices, false);
+        // visited[node] = true;
+        dfshelper(node, visited);
+    }
 };
 
 // Main function to test the Graph class
@@ -98,5 +130,6 @@ int main()
     // Start BFS from vertex 2
     cout << "Starting Breadth First Search from node 2:" << endl;
     graph.breadth_first_search(2);
+    graph.depthFirstTraversal(7);
     return 0;
 }
