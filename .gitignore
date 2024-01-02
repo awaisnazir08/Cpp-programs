@@ -69,3 +69,4 @@ graphUsingAdjacencyList.exe
 inDegreeoutDegree.exe
 cycleDetectionDirectedGraph.exe
 topologicalSort.exe
+djikstra.exe
