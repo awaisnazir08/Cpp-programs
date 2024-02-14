@@ -46,15 +46,41 @@ int ceil(BinarySearchTrees* root, int v)
         {
             return v;
         }
-        else if(root->data < v)
+        else if(v > root->data)
         {
             root = root->right;
         }
-        else{
+        else
+        {
             value = root->data;
             root = root->left;
         }
         return value;
+    }
+}
+
+int floor(BinarySearchTrees *node, int v)
+{
+    if (node == nullptr)
+    {
+        return -1;
+    }
+    int value = -1;
+    while(node != nullptr)
+    {
+        if(node->data == v)
+        {
+            return v;
+        }
+        else if(v < node->data)
+        {
+            node = node->left;
+        }
+        else
+        {
+            value = node->data;
+            node = node -> right;
+        }
     }
 }
 
@@ -126,6 +152,8 @@ void postOrderTraversal(BinarySearchTrees* root)
 }
 
 // Function to search for a key in a Binary Search Tree
+/* The function `searchInBinarySearchTree` is used to search for a key in a Binary Search Tree. It
+takes in the root of the tree and the key to be searched as parameters. */
 BinarySearchTrees* searchInBinarySearchTree(BinarySearchTrees* root, int key)
 {
     if (root == nullptr)
@@ -145,6 +173,13 @@ BinarySearchTrees* searchInBinarySearchTree(BinarySearchTrees* root, int key)
         return searchInBinarySearchTree(root->left, key);
     }
 }
+/**
+ * The function `getMin` recursively finds and returns the minimum value in a binary search tree.
+ * 
+ * @param n The parameter `n` is a pointer to a BinarySearchTrees object.
+ * 
+ * @return the minimum value in the binary search tree.
+ */
 int getMin(BinarySearchTrees* n)
 {
     if(n == nullptr)
@@ -278,9 +313,9 @@ BinarySearchTrees* deleteInBinarySearchTree(BinarySearchTrees* root, int key)
 
         // Case 3: Node with two children
         // the logic is that we will find the next bigger element, and replace it with the node that has to be deleted
-        BinarySearchTrees* temp = inOrderSuccessor(root->right);
-        root->data = temp->data;
-        root->right = deleteInBinarySearchTree(root->right, temp->data);
+        int temp = Successor(root->right);
+        root->data = temp;
+        root->right = deleteInBinarySearchTree(root->right, temp);
     }
 }
 

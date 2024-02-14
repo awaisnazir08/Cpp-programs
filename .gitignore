@@ -70,3 +70,12 @@ inDegreeoutDegree.exe
 cycleDetectionDirectedGraph.exe
 topologicalSort.exe
 djikstra.exe
+.vs/C++/v17/Browse.VC.db
+.vs/C++/FileContentIndex/read.lock
+.vs/C++/FileContentIndex/99b26792-7da0-48d5-b84f-048e750d742b.vsidx
+.vs/slnx.sqlite
+.vs/ProjectSettings.json
+.vs/C++/v17/.wsuo
+.vs/VSWorkspaceState.json
+decoratorPattern.exe
+observerPattern.exe

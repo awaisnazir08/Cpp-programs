@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+//playing with the minimum index(minimum value index finder in each iteration)
 void selectionSort(int a[], int n)
 {
     for(int i = 0; i < n; i++)

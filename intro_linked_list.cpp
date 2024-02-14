@@ -181,7 +181,7 @@ void makeCycle(node* myList, int pos)
 {
     node* temp = myList;
     node* cycleStart;
-    int counter =1;
+    int counter = 1;
     while(temp->next != nullptr)
     {
         if(counter==pos)

@@ -4,8 +4,7 @@ using namespace std;
 class BinaryTrees
 {
 public:
-    BinaryTrees *parent;
-    BinaryTrees *left, *right;
+    BinaryTrees *parent, *left, *right;
     int value;
     BinaryTrees(int v, BinaryTrees *parentNode = nullptr)
     {

@@ -16,7 +16,7 @@ public:
         }
         for (int i = 0; i < n2; i++)
         {
-            a2[i] = a[middle + i+1];  //why plus 1
+            a2[i] = a[middle + i + 1];  //why plus 1
         }
         int i = 0, j = 0, k = left;
         while (i < n1 && j < n2)
@@ -75,7 +75,7 @@ int main()
     }
     std::cout << std::endl;
 
-    s.mergeSort(arr, 0,arr_size - 1);
+    s.mergeSort(arr, 0, arr_size - 1);
 
     std::cout << "Sorted array: ";
     for (int i = 0; i < arr_size; i++) {

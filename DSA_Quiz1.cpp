@@ -12,7 +12,7 @@ public:
     }
 };
 // &head is the reference to the pointer head, indicating that it is reference to a pointer
-void insertAtTail(node *&head, string val) // node* is a pointer referencing to an abject of type node which is usually a class or a struct
+void insertAtTail(node *&head, string val) // node* is a pointer referencing to an object of type node which is usually a class or a struct
 {
     node *n = new node(val);
     if (head == NULL)

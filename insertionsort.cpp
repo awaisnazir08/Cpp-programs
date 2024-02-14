@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+//best case complexity of bubble sort and insertion sort is O(N)
 void insertionSort(int a[], int n)
 {
     if (n == 1)

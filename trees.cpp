@@ -87,6 +87,33 @@ public:
         }
     }
 
+    /**
+    * The function `getChild` returns the nth child of a given node, or `nullptr` if the index is out
+    * of bounds.
+    * 
+    * @param node A pointer to the TreeNode whose child is to be retrieved.
+    * @param n The parameter `n` represents the index of the child node that we want to retrieve.
+    * 
+    * @return a pointer to a TreeNode object.
+    */
+    TreeNode* getChild(TreeNode* node, int n)
+    {
+        if(n < 0 || n >=getNodeDegree(node))
+        {
+            return nullptr;
+        }
+        std::list<TreeNode*> temp = node->children;
+        int count = 0;
+        for(TreeNode* child: node->children)
+        {
+            count++;
+            if(count == n)
+            {
+                return child;
+            }
+        }
+    }
+
 private:
     // Helper function to retrieve a node with a specific value
     TreeNode* getNodeWithValueHelper(TreeNode* node, int val) {
