@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <memory>
 using namespace std;
+
+class Course; // Forward declaration
+
 class Person {
 protected:
     int id;
@@ -14,13 +17,81 @@ public:
     virtual void displayInfo() const = 0;
 };
 
+class Student; // Forward declaration
+
+class Enrollment {
+private:
+    weak_ptr<Student> student; // Using weak_ptr to avoid circular dependency
+    weak_ptr<Course> course;
+    double grade;
+
+public:
+    Enrollment(const shared_ptr<Student>& student, const shared_ptr<Course>& course)
+        : student(student), course(course), grade(0.0) {}
+
+    void updateGrade(double newGrade) {
+        if (newGrade >= 0.0 && newGrade <= 100.0) {
+            grade = newGrade;
+        } else {
+            cout << "Invalid grade value. Grade should be between 0 and 100.\n";
+        }
+    }
+
+    double getGrade() const { return grade; }
+};
+
+class Course {
+private:
+    int id;
+    string name;
+    string description;
+    vector<string> materials;
+    friend class Student;
+    friend class Professor;
+    vector<shared_ptr<Student>> enrolledStudents;
+    vector<Enrollment> enrollments; // Keep track of enrollments
+
+    void enrollStudent(const shared_ptr<Student>& student) {
+        enrolledStudents.push_back(student);
+        enrollments.emplace_back(student, shared_from_this()); // Create an enrollment object
+    }
+
+    void removeStudent(const shared_ptr<Student>& student) {
+        // Implementation to remove a student from the course
+    }
+
+protected:
+    void addMaterial(const string& material) {
+        materials.push_back(material);
+    }
+
+public:
+    Course(int id, const string& name, const string& description) : id(id), name(name), description(description) {}
+
+    const string& getName() const {
+        return name;
+    }
+
+    const vector<shared_ptr<Student>>& getEnrolledStudents() const {
+        return enrolledStudents;
+    }
+
+    vector<string> getCourseMaterial() const {
+        return materials;
+    }
+
+    const vector<Enrollment>& getEnrollments() const {
+        return enrollments;
+    }
+};
+
 class Student : public Person, public enable_shared_from_this<Student> {
 private:
     vector<shared_ptr<Course>> enrolledCourses;
     float marks;
+
 public:
-    Student(int id, const string& name, const string& email) : Person(id, name, email) {
-    }
+    Student(int id, const string& name, const string& email) : Person(id, name, email), marks(0.0) {}
 
     void enroll(const shared_ptr<Course>& course) {
         enrolledCourses.push_back(course);
@@ -33,54 +104,19 @@ public:
 
     void displayInfo() const override {
         cout << "Student ID: " << id << ", Name: " << name << ", Email: " << email << "\n";
-        cout<<"Courses..."<<endl;
+        cout << "Courses...\n";
         int i = 1;
-        for(auto it: enrolledCourses)
-        {
-            cout<<"Course: "<<i<<" "<<it->getName();
+        for (auto it : enrolledCourses) {
+            cout << "Course " << i++ << ": " << it->getName() << "\n";
         }
     }
-    void getMarks(float f)
-    {
-        if(f > 0)
-        {
+
+    void getMarks(float f) {
+        if (f >= 0) {
             marks = f;
+        } else {
+            cout << "Marks cannot be less than zero..!!\n";
         }
-        else{
-            cout<<"Marks cannot be less than zero..!!"<<endl;
-        }
-    }
-};
-
-class Course {
-private:
-    int id;
-    string name;
-    string description;
-    vector<string> materials;
-    friend class Student;
-    friend class Professor;
-    vector<shared_ptr<Student>> enrolledStudents;
-
-    void enrollStudent(const shared_ptr<Student>& student) {
-    enrolledStudents.push_back(student);
-    }
-protected:
-    void addMaterial(const string& material) {
-    materials.push_back(material);
-    }
-public:
-    Course(int id, const string& name, const string& description) : id(id), name(name), description(description) {}
-    const string& getName() const {
-        return name;
-    }
-
-    const vector<shared_ptr<Student>>& getEnrolledStudents() const {
-        return enrolledStudents;
-    }
-
-    vector<string> getCourseMaterial() const {
-        return materials;
     }
 };
 
@@ -100,50 +136,32 @@ public:
         course->removeStudent(student);
     }
 
-    void uploadCourseMaterial(Course* course, const string material)
-    {
+    void uploadCourseMaterial(Course* course, const string material) {
         course->addMaterial(material);
     }
 
     const string& getDepartment() const { return department; }
 };
 
-class Enrollment {
-private:
-    shared_ptr<Student> student;
-    shared_ptr<Course> course;
-    double grade;
-
-public:
-    Enrollment(const shared_ptr<Student>& student, const shared_ptr<Course>& course, double grade)
-        : student(student), course(course), grade(grade) {}
-
-    double getGrade() const { return grade; }
-};
-
 class Report {
 public:
     static void generateGradeReport(const shared_ptr<Student>& student, const shared_ptr<Course>& course) {
-        // Implementation to generate a grade report
         cout << "Generating grade report for ";
         student->displayInfo();
         cout << "Course: " << course->getName() << "\n";
-        // Implement specific report generation logic
+
+        for (const auto& enrollment : course->getEnrollments()) {
+            if (enrollment.getGrade() > 0.0) {
+                cout << "Grade for " << student->getName() << ": " << enrollment.getGrade() << "\n";
+            } else {
+                cout << "Grade not available for " << student->getName() << "\n";
+            }
+        }
+    }
+
+    static void generatePerformanceReport(const shared_ptr<Student>& student) {
+        cout << "Generating performance report for ";
+        student->displayInfo();
+        cout << "Overall Marks: " << student->getMarks() << "\n";
     }
 };
-
-int main() {
-    shared_ptr<Student> student1 = make_shared<Student>(1, "Alice", "alice@example.com");
-    shared_ptr<Professor> professor1 = make_shared<Professor>(2, "Bob", "Computer Science");
-
-    shared_ptr<Course> course1 = make_shared<Course>(1, "Introduction to Programming", "Learn basic programming concepts");
-    student1->enroll(course1);
-
-    // Add more courses, students, professors, enrollments, etc.
-
-    Report::generateGradeReport(student1, course1);
-
-    // No need to free allocated memory for smart pointers
-
-    return 0;
-}
