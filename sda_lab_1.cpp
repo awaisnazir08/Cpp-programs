@@ -111,16 +111,24 @@ public:
         }
     }
 
-    void getMarks(float f) {
+    void setMarks(float f) {
         if (f >= 0) {
             marks = f;
         } else {
             cout << "Marks cannot be less than zero..!!\n";
         }
     }
+    float getMarks()
+    {
+        return marks;
+    }
+    string getName()
+    {
+        return name;
+    }
 };
 
-class Professor : public Person, protected Course {
+class Professor : public Person {
 private:
     string department;
 
