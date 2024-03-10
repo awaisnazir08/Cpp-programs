@@ -66,6 +66,12 @@
         "xlocbuf": "cpp",
         "xlocmes": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
-    }
+        "xloctime": "cpp",
+        "fstream": "cpp",
+        "map": "cpp",
+        "unordered_map": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

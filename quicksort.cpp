@@ -51,7 +51,7 @@ void quickSort(std::vector<int>& arr, int low, int high) {
 }
 
 int main() {
-    std::vector<int> arr = {9, 7, 5, 11, 12, 2, 14, 3, 10, 6};
+    std::vector<int> arr = {9, 7, 5, 11, 1, 6, 1, -02, 5, -9, 453,12, 2, 14, 3, 10, 6};
     int n = arr.size();
 
     std::cout << "Original array: ";

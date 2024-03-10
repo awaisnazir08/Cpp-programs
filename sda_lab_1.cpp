@@ -5,8 +5,10 @@
 #include <memory>
 using namespace std;
 
-class Course; // Forward declaration
+class Course; 
 
+/* The class "Person" is an abstract base class that represents a person with an ID, name, and email,
+and has a pure virtual function for displaying information. */
 class Person {
 protected:
     int id;
@@ -17,18 +19,20 @@ public:
     virtual void displayInfo() const = 0;
 };
 
-class Student; // Forward declaration
+class Student;
 
+/* The Enrollment class represents the enrollment of a student in a course and allows for updating and
+retrieving the grade for that enrollment. */
 class Enrollment {
 private:
-    weak_ptr<Student> student; // Using weak_ptr to avoid circular dependency
+    weak_ptr<Student> student;
     weak_ptr<Course> course;
     double grade;
 
 public:
-    Enrollment(const shared_ptr<Student>& student, const shared_ptr<Course>& course)
-        : student(student), course(course), grade(0.0) {}
-
+    Enrollment(const shared_ptr<Student>& student, const shared_ptr<Course>& course): student(student), course(course), grade(0.0) 
+        {
+        }
     void updateGrade(double newGrade) {
         if (newGrade >= 0.0 && newGrade <= 100.0) {
             grade = newGrade;
@@ -37,7 +41,9 @@ public:
         }
     }
 
-    double getGrade() const { return grade; }
+    double getGrade() const { 
+        return grade; 
+    }
 };
 
 class Course {
@@ -49,15 +55,14 @@ private:
     friend class Student;
     friend class Professor;
     vector<shared_ptr<Student>> enrolledStudents;
-    vector<Enrollment> enrollments; // Keep track of enrollments
+    vector<Enrollment> enrollments;
 
     void enrollStudent(const shared_ptr<Student>& student) {
         enrolledStudents.push_back(student);
-        enrollments.emplace_back(student, shared_from_this()); // Create an enrollment object
+        enrollments.emplace_back(student, shared_from_this());
     }
 
     void removeStudent(const shared_ptr<Student>& student) {
-        // Implementation to remove a student from the course
     }
 
 protected:
@@ -111,17 +116,20 @@ public:
         }
     }
 
-    void setMarks(float f) {
+    void setMarks(float f) 
+    {
         if (f >= 0) {
             marks = f;
         } else {
             cout << "Marks cannot be less than zero..!!\n";
         }
     }
+
     float getMarks()
     {
         return marks;
     }
+
     string getName()
     {
         return name;
@@ -136,6 +144,7 @@ public:
     Professor(int id, const string& name, const string& email, const string& department)
         : Person(id, name, email), department(department) {}
 
+    //managing student enrollments
     void addStudentInCourse(const shared_ptr<Student>& student, const shared_ptr<Course>& course) {
         student->enroll(course);
     }
@@ -148,7 +157,9 @@ public:
         course->addMaterial(material);
     }
 
-    const string& getDepartment() const { return department; }
+    const string& getDepartment() const { 
+        return department; 
+    }
 };
 
 class Report {
