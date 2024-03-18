@@ -79,3 +79,5 @@ djikstra.exe
 .vs/VSWorkspaceState.json
 decoratorPattern.exe
 observerPattern.exe
+t.py
+test.c
